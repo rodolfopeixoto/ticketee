@@ -1,0 +1,19 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: db
+  username: postgres
+  password:
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: codemca_development
+test:
+  <<: *default
+  database: codemca_test
+production:
+  <<: *default
+  database: codemca_production
+  username: codemca
+  password: <%= ENV['CODEMCA_DATABASE_PASSWORD'] %>
