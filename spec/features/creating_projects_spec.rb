@@ -1,11 +1,15 @@
 require 'rails_helper'
 
 RSpec.feature 'Users can create new projects' do
-  scenario do
+ 
+  before do
+   visit '/'
+   click_link 'New Project'
+  end
+  
+  scenario 'with valid attributes' do
+    
     name = 'Rodolfo' # Faker::Name.name
-    visit '/'
-
-    click_link 'New Project'
 
     fill_in 'Name', with: name 
     fill_in 'Description', with: Faker::Lorem.paragraph(2)
@@ -18,5 +22,12 @@ RSpec.feature 'Users can create new projects' do
 
     title = "#{project.name} - Projects - Ticketee"
     expect(page).to have_title title
+  end
+
+  scenario 'when providing invalid attributes' do
+    click_button 'Create Project'
+
+    expect(page).to have_content 'Project has not been created.'
+    expect(page).to have_content "Name can't be blank"
   end
 end

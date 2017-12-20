@@ -121,6 +121,46 @@ If you don't wish to use either **notice** or **alert**, you must specify flash 
   redirect_to @project, flash: { success: 'Project has not been created.' }
 ```
 
+
+flash vs flash.now
+
+flash vs. flash.now
+The controller action in listing 3.25 uses two different methods to access the array
+of flash messages for your page—flash and flash.now. What’s the difference?
+flash is the standard way of setting flash messages, and it will store the message
+to display on the very next page load. You do this immediately before issuing redirects—
+in this case you redirect immediately to the show page in the ProjectsController,
+and that page is the next page load, meaning that the flash message displays on the
+show view.
+
+flash.now is an alternative way of setting flash messages, and it will store the mes-
+sage to display on the current page load. In this case, you don’t redirect anywhere,
+you simply render a view out from the same action, so you need to use flash.now
+to make sure the user sees the error message when you render the new view.
+There’s also a third method—flash.keep—but this is used very rarely. If you want
+to keep an existing flash message around for another request, you can call
+flash.keep in your controller, and the flash message will hang around for a little
+while longer.
+
+If you were to use flash instead of flash.now in this case, the user would see the
+message twice—once on the current page and once on the next page.
+
+```ruby
+  def create
+    @project = Project.new(project_params)
+
+    if @project.save
+      flash[:notice] = 'Project has been created.'
+      redirect_to @project
+    else
+      flash.now[:alert] = 'Project has not been created.'
+      render 'new'
+    end
+  end
+
+```
+
+
 ### Links
 
 Developer
