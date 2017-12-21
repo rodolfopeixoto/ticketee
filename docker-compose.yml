@@ -16,16 +16,29 @@ services:
     build: . 
     command: bundle exec rails s -p 3000 -b '0.0.0.0' 
     volumes: 
-      - .:/codemca 
+      - .:/ticketee 
     ports: 
       - "3000:3000" 
     depends_on: 
       - db
+  # production:
+  #   build: .
+  #   environment:
+  #     - RAILS_ENV=production
+  #     - RACK_ENV=production
+  #     - SECRET_KEY_BASE=09b37a58096f031e7ee8ccaba0a69f742463afac00e971c5bd0b960127bfcadc7c55c0d12470feaa5ccc67ed2762fe4d8db90c5b074794d7c45be30632bdc31a
+  #   command: rails s -e production -p 3001 -b '0.0.0.0'
+  #   volumes:
+  #     - .:/ticketee
+  #   ports:
+  #     - "3001:3001"
+  #   depends_on:
+  #     - db
   # test:
   #   build: .
   #   command: bundle exec rspec
   #   volumes:
-  #     - .:/codemca
+  #     - .:/ticketee
   #   depends_on:
   #     - db
   #     - selenium

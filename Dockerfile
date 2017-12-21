@@ -10,7 +10,7 @@ RUN apt-get update -yqq \
   && apt-get -q clean \ 
   && rm -rf /var/lib/apt/lists
  
-WORKDIR /codemca 
+WORKDIR /ticketee 
 COPY Gemfile* ./ 
 RUN bundle install 
 COPY . . 
