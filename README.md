@@ -160,6 +160,60 @@ message twice—once on the current page and once on the next page.
 
 ```
 
+Use SASS, Let's go create **sematic styling** for example:
+
+```ruby
+
+ <li><%= link_to 'Edit Project', edit_project_path(@project), class: 'edit' %></li>
+
+```
+
+Code SASS:
+
+```scss
+a.edit {
+    @extend .btn;
+    @extend .btn-primary;
+
+    &:before {
+        font-family: 'FontAwesome';
+        @extend .fa-pencil;
+        padding-right: 0.5em;
+    }
+}
+```
+
+In code above edit extend of the bootstrap and font-awesome and add icon font in text and add space between.
+
+
+##### Flash message output
+
+app/views/layouts/application.html.erb
+
+```html
+   <div class="container">
+      <% flash.each do |key, message| %>
+        <div class="alert alert-<%= key %>">
+          <%= message %>
+        </div>
+      <% end %>
+   </div>
+```
+
+and file app/assets/stylesheet/application.scss
+
+```scss 
+.alert-notice{
+    @extend .alert-success;
+    text-align: center;
+}
+
+.alert-alert{
+    @extend .alert-danger;
+    text-align: center;
+}
+
+```
 
 ### Links
 

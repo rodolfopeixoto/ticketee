@@ -17,6 +17,9 @@ gem 'coffee-rails', '~> 4.2'
 # gem 'therubyracer', platforms: :ruby
 
 gem 'rubocop', require: false
+gem 'bootstrap', '~> 4.0.0.beta2.1'
+gem 'font-awesome-rails'
+gem 'simple_form'
 
 gem 'rubycritic', require: false
 

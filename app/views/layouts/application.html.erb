@@ -8,6 +8,7 @@
         Ticketee
       <% end %>
     </title>
+    <meta name="viewport" content="width=devise-width, initial-scale=1">
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -16,10 +17,15 @@
 
   <body>
 
-   <%= flash.each do |key, message| %>
-     <div><%= message %></div>
-   <% end %>
+  <%= render 'layouts/nav' %>
 
-    <%= yield %>
+   <div class="container">
+      <% flash.each do |key, message| %>
+        <div class="alert alert-<%= key %>">
+          <%= message %>
+        </div>
+      <% end %>
+   </div>
+    <%= yield %> 
   </body>
 </html>

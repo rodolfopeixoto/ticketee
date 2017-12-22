@@ -1,0 +1,12 @@
+@media(min-width: 768px){
+  header {
+    h1, h2, h3, h4, h5, h6 {
+      max-width: 55%;
+  }
+
+  ul.actions {
+    flex-direction: column;
+  }
+  
+  }
+}

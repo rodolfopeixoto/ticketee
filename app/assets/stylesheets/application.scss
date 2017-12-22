@@ -1,0 +1,84 @@
+@import "bootstrap";
+@import "font-awesome";
+@import "simple_form";
+@import "projects";
+@import "responsive";
+
+.page-header {
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-bottom: 0px;
+
+    &:first-child {
+        margin-top: 20px;
+    }
+}
+
+ul.actions {
+    @extend .list-unstyled;
+    @extend .list-inline;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.actions li{
+    padding: 5px;
+}
+
+
+header {
+    @extend .page-header;
+}
+
+a.new{
+    @extend .btn;
+    @extend .btn-success;
+
+    // Add icon in text and space between text icon and text
+    &:before {
+        font-family: 'FontAwesome';
+        @extend .fa-plus;
+        padding-right: 0.5em;
+    }
+    
+}
+
+a.edit {
+    @extend .btn;
+    @extend .btn-primary;
+
+    &:before {
+        font-family: 'FontAwesome';
+        @extend .fa-pencil;
+        padding-right: 0.5em;
+    }
+}
+
+a.delete {
+    @extend .btn;
+    @extend .btn-danger;
+
+    &:before {
+        font-family: 'FontAwesome';
+        @extend .fa-trash;
+        padding-right: 0.5em;
+    }
+}
+
+
+.alert-notice{
+    @extend .alert-success;
+    margin-top: 6px;
+}
+
+.alert-alert{
+    @extend .alert-danger;
+    margin-top: 6px;
+}
+
+form {
+    max-width: 500px;
+}
