@@ -251,6 +251,35 @@ so that the description renders exactly how the user intends it to.
   <%= simple_format(@ticket.description) %>
 ```
 
+#### Dependent delete_all or destroy
+
+The problem is that if you have a large number of tickets, destroy is called on each one, which will be slow.
+
+```ruby
+  has_many :tickets, dependent: :destroy
+```
+
+```ruby
+  has_many :tickets, dependent: :delete_all
+```
+dependent delete_all is equal:
+
+```sql
+  DELETE FROM tickets WHERE project_id = :project_id
+```
+
+Thirdly, if you want to disassociate tickets from a project and unset the project_id field, you can use this options:
+
+```ruby
+  has_many :tickets, dependent: :nullify
+```
+or
+
+```sql
+  UPDATE tickets SET project_id = NULL WHERE project_id = :project_id
+```
+
+
 ### Links
 
 Developer
