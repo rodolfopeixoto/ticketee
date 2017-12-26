@@ -215,6 +215,42 @@ and file app/assets/stylesheet/application.scss
 
 ```
 
+
+##### Rake - SCHEMA
+
+RESTORING WITH RAKE Large projects can have hundreds of migrations,
+which may not run due to changes in the system over time. It’s best to use
+bundle exec rake db:schema:load.
+
+```bash
+ bundle exec rails db:schema:load
+```
+
+
+#### Polymorphic routing
+
+POLYMORPHIC ROUTING A great description of polymorphic routing can be
+found on blog, “The Life of a Radar,” at [http://ryanbigg.com/2012/03/polymorphic-routes](http://ryanbigg.com/2012/03/polymorphic-routes) .
+
+
+#### Sequence before_action
+
+The sequence here is important, because you want to find the @project before you go looking for tickets for it.
+
+```ruby
+  before_action :set_project
+  before_action :set_ticket, only: [:show, :edit, :update, :destroy]
+```
+
+##### Method simple_format
+
+The new method, simple_forma, converts the line breaks entered into description field into HTML break tags (<br>)
+so that the description renders exactly how the user intends it to.
+
+```ruby
+  <%= simple_format(@ticket.description) %>
+```
+
 ### Links
 
 Developer
