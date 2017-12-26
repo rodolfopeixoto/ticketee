@@ -20,6 +20,7 @@ gem 'rubocop', require: false
 gem 'bootstrap', '~> 4.0.0.beta2.1'
 gem 'font-awesome-rails'
 gem 'simple_form'
+gem 'devise'
 
 gem 'rubycritic', require: false
 
