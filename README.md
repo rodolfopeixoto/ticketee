@@ -279,6 +279,56 @@ or
   UPDATE tickets SET project_id = NULL WHERE project_id = :project_id
 ```
 
+#### TIME_AGO_IN_WORDS
+
+THE TIME_AGO_IN_WORDS VIEW HELPER
+You’re using a view helper called
+time_ago_in_words here. It will present the timestamp for when the ticket was cre-
+ated in a nice readable format, such as “about 3 minutes” or “about 2 hours.” Just
+a little nicety. You can find time_ago_in_words at (http://api.rubyonrails.org/)[http://api.rubyonrails.org/]
+classes/ActionView/Helpers/DateHelper.html#method-i-time_ago_in_words.
+
+
+#### How to use belongs_to :author, class_name: 'User'
+
+We can to add a new name for column.
+
+```ruby
+class Ticket < ActiveRecord::Base
+  belongs_to :author, class_name: "User"
+end
+```
+
+```bash
+rails g migration add_author_to_tickets author:references
+```
+
+Change this code.
+
+```ruby
+class AddAuthorToTickets < ActiveRecord::Migration
+  def change
+    add_reference :tickets, :author, index: true, foreign_key: true
+  end
+end
+```
+
+to:
+
+
+```ruby
+class AddAuthorToTickets < ActiveRecord::Migration[5.1]
+  def change
+    add_reference :tickets, :author, index: true
+    add_foreign_key :tickets, :users, column: :author_id
+  end
+end
+
+```
+
+Why do you need tp dp this? Because Rails', automatic inference will try to apply a foreign key on your **tickets** table, pointing to an authors table - and you don't have a ticket table. The author will be a **User**, living in the users table, so you need to specifically tell Rails that the foreign key should point to the users table instead (but still use the author_id field to do so.)
+
+
 
 ### Links
 

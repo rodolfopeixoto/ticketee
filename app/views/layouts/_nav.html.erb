@@ -24,13 +24,20 @@
 
       <% if user_signed_in? %>
        <div class="navbar-right">
-         <p class="navbar-text">
-           Signed in as <%= current_user.email %>
-         </p> 
-        <ul class="nav navbar-nav">
-          <li><%= link_to 'Sign out', destroy_user_session_path, method: :delete %></li>
-        </ul> 
-      
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <p class="navbar-text">
+                Signed in as <%= current_user.email %>
+              </p> 
+            </div>
+            <div class="col">
+              <ul class="nav navbar-nav">
+                <li><%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'nav-link' %></li>
+              </ul> 
+            </div>
+          </div>
+        </div>      
        </div>
       <% end %>
   </div>
