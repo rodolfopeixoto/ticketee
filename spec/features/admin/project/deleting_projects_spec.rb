@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.feature 'Users can delete projects' do
+
+  before do
+    user = create(:user, :admin)
+    login_as(user)
+  end
+
   scenario 'successfully' do
     project = create(:project)
 
