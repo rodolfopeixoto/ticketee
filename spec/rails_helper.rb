@@ -18,6 +18,7 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   config.include FactoryBot::Syntax::Methods
   config.include Warden::Test::Helpers, type: :feature
+  config.include Devise::Test::ControllerHelpers, type: :controller
   config.after(type: :feature) { Warden.test_reset! }
   
 end
