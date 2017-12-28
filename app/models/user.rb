@@ -12,4 +12,7 @@ class User < ApplicationRecord
          # omniauthable —Adds support for OmniAuth (https://github.com/intridea/
          # omniauth), which will allow users to authenticate with your app via an external
          # service, such as Facebook or Twitter.
+  def to_s
+    "#{email} (#{admin? ? "Admin" : "User"})"
+  end
 end
