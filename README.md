@@ -329,6 +329,47 @@ end
 Why do you need tp dp this? Because Rails', automatic inference will try to apply a foreign key on your **tickets** table, pointing to an authors table - and you don't have a ticket table. The author will be a **User**, living in the users table, so you need to specifically tell Rails that the foreign key should point to the users table instead (but still use the author_id field to do so.)
 
 
+#### How to use authorization in view with Helper
+
+File: index.html.erb
+
+```html
+<% admins_only do %>
+
+<ul class="actions">
+  <li>
+    <%= link_to "New Project", new_admin_project_path, class: 'new' %>
+  </li>
+</ul>
+
+<% end %>
+```
+
+File: application_helper.rb
+
+```ruby
+module ApplicationHelper
+  def title(*parts)
+    unless parts.empty?
+      content_for :title do
+        ( parts << 'Ticketee').join(' - ')
+      end
+    end
+  end
+
+  def admins_only(&block)
+    block.call if current_user.try(:admin?)
+  end
+end
+
+
+```
+The admins_only method takes a block (as promised), which is the code between
+the admins_only do and end in your view. To run this code in the block, you call
+block.call , which only runs it if current_user.try(:admin?) returns true . This
+try method tries a method on an object; if the object is nil (as it would be if no
+user is currently logged in), try gives up and returns nil , rather than raising a
+NoMethodError exception.
 
 ### Links
 
