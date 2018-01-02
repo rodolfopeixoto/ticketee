@@ -388,6 +388,63 @@ ples might be archive, or approve, or preview. These routes will generate URLs
 like /projects/1/archive or /projects/3/approve.
 
 
+
+#### References in generate model
+
+
+```
+  rails g model role user:references role:string project:references
+```
+
+```
+class CreateRoles < ActiveRecord::Migration[5.1]
+  def change
+    create_table :roles do |t|
+      t.references :user, index: true, foreign_key: true
+      t.string :role
+      t.references :project, index: true, foreign_key: true
+
+      t.timestamps null: false
+    end
+  end
+end
+
+```
+
+What does this acctually mean?
+
+The **user:references** is a shortcut for doing several things:
+
+  - Adding a **user_id** integer field to the **roles** table
+
+  - Adding an index to the **roles** table on the **user_id** field (seen in the migrationj as **index:true**)
+
+  - Adding a foreign_key between the user_id field on the **roles** table and the id field on the **roles** table (seen in the migration as foreign_key: true)
+  
+  - Adding a belongs_to :user association to the generated Role model
+
+##### Association Mannually
+
+* Specifying *user_id:integer* when generating the migration
+
+* Adding the index in the migration with *add_index* *:roles*, *user_id*
+
+* Adding the foreign key in the migration with *add_foreign_key* *:roles* , *:users*
+
+* Editing the generated *Role* model and adding the required association
+
+
+#### Try in Real-world apps
+
+try can be seen as a code smell. 1 If you don’t know whether or not your user variable
+has a nil value, it doesn’t look like you have confidence in your code. But in this case,
+you know exactly when you have nil and exactly when you don’t—if no user is current-
+ly logged in, then user will be nil.
+If this book were much longer and you were building a real-world production app, you
+could look at implementing a “guest” user record that would always return false to
+the question of admin?. But we’ll leave that for you to explore. (Hint: this is called the
+Null Object Pattern.)
+
 ### Links
 
 Developer

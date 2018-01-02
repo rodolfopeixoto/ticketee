@@ -1,12 +1,20 @@
 require 'rails_helper'
 
 RSpec.feature 'Users can view projects' do
-  scenario 'with the project detrails' do
-    project = create(:project, name: Faker::Name.name)
+
+  let(:user) { create(:user) }
+  let(:project) { create(:project, name: 'Sublime Text 3') }
+
+  before do
+    login_as(user)
+    assign_role!(user, :viewer, project)
+  end
+
+  scenario 'with the project details' do
 
     visit '/'
 
-    click_link project.name
+    click_link 'Sublime Text 3'
 
     expect(page.current_url).to eq project_url(project)
   end

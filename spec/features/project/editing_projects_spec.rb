@@ -1,29 +1,30 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.feature 'Users can edit existing projects' do
+RSpec.feature "Users can edit existing projects" do
+  let(:user) { create(:user) }
+  let(:project) { create(:project, name: "Sublime Text 3") }
 
   before do
-   project = create(:project)
-   
-   visit '/'
-   
-   click_link project.name
-   click_link 'Edit Project'
-  end  
+    login_as(user)
+    assign_role!(user, :viewer, project)
 
-  scenario 'with valid attributes' do
-
-    fill_in 'Name', with: 'Rodolfo'
-    click_button 'Update Project'
-
-    expect(page).to have_content 'Project has been updated.'
-    expect(page).to have_content 'Rodolfo'
+    visit "/"
+    click_link "Sublime Text 3"
+    click_link "Edit Project"
   end
 
-  scenario 'when providing invalid attributes' do
-    fill_in 'Name', with: ''
-    click_button 'Update Project'
+  scenario "with valid attributes" do
+    fill_in "Name", with: "Sublime Text 4 beta"
+    click_button "Update Project"
 
-    expect(page).to have_content 'Project has not been updated.'
+    expect(page).to have_content "Project has been updated."
+    expect(page).to have_content "Sublime Text 4 beta"
+  end
+
+  scenario "when providing invalid attributes" do
+    fill_in "Name", with: ""
+    click_button "Update Project"
+
+    expect(page).to have_content "Project has not been updated."
   end
 end

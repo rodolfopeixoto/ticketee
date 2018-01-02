@@ -21,7 +21,7 @@ gem 'bootstrap', '~> 4.0.0.beta2.1'
 gem 'font-awesome-rails'
 gem 'simple_form'
 gem 'devise'
-
+gem 'pundit'
 gem 'rubycritic', require: false
 
 gem 'rails-i18n', '~> 5.0.0'
