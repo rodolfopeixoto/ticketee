@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :role do
     user nil
-    role "MyString"
+    role "viewer"
     project nil
   end
 end
