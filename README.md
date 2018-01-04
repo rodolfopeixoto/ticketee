@@ -445,6 +445,68 @@ could look at implementing a “guest” user record that would always return fa
 the question of admin?. But we’ll leave that for you to explore. (Hint: this is called the
 Null Object Pattern.)
 
+
+##### Metaprograming -> has_member? and has_manager, has_editor, has_viewer
+
+This is a little bit of Ruby metaprogramming magic. Instead of manually defining has_manager?.
+has_editor?. and has_viewer?
+
+**define_method** takes the name of the method to define as the first argument, the arguments to the method
+as the block arguments (|user|), and the content of the method as the content of the block. Thses methods work identifcally to those you'd write normally, just with less code.
+
+File: app/models/project.rb
+
+```ruby
+
+class Project < ApplicationRecord
+  validates :name, presence: true
+
+  has_many :tickets, dependent: :delete_all
+  has_many :roles, dependent: :delete_all
+
+  def has_member?(user)
+    roles.exists?(user_id: user)
+  end
+
+  [:manager, :editor, :viewer].each do |role|
+    define_method "has_#{role}?" do |user|
+      roles.exists?(user_id: user, role: role)
+    end
+  end
+
+end
+
+```
+
+Refactoring policies
+
+```ruby
+class ProjectPolicy < ApplicationPolicy
+  class Scope < Scope
+    def resolve
+      return scope.none if user.nil?
+      return scope.all if user.admin?
+
+      scope.joins(:roles).where(roles: { user_id: user })
+    end
+  end
+
+  def show?
+    user.try(:admin?) || record.has_member?(user)
+  end
+
+  def update?
+    user.try(:admin?) || record.has_manager?(user)
+  end
+end
+
+```
+
+
+```ruby
+
+```
+
 ### Links
 
 Developer
