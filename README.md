@@ -560,6 +560,90 @@ end
 ```
 
 
+##### Attaching many files
+
+Testing multiple-file upload
+
+```ruby
+scenario "with multiple attachments" do
+  fill_in "Name", with: "Add documentation for blink tag"
+  fill_in "Description", with: "The blink tag has a speed attribute"
+  attach_file "File #1", Rails.root.join("spec/fixtures/speed.txt")
+  attach_file "File #2", Rails.root.join("spec/fixtures/spin.txt")
+  attach_file "File #3", Rails.root.join("spec/fixtures/gradient.txt")
+  click_button "Create Ticket"
+  expect(page).to have_content "Ticket has been created."
+  within("#ticket .attachments")
+    expect(page).to have_content
+    expect(page).to have_content
+    expect(page).to have_content
+  end
+end
+```
+
+File: app/views/tickets/_form.html.erb
+
+```ruby
+<%= simple_form_for([project, ticket]) do |f| %>
+  <%= f.input :name %>
+  <%= f.input :description %>
+  <h3>Attachments</h3>
+  <%= f.simple_fields_for :attachments do |ff| %>
+    <%= ff.input :file, as: :file, label: "File ##{ff.index + 1}" %>
+    <%= ff.input :file_cache, as: :hidden %>
+  <% end %>
+
+  <%= f.button :submit, class: 'btn-primary' %>
+<% end %>
+```
+
+
+File: views/tickets/show.html.erb
+
+```ruby
+
+  <% if @ticket.attachments.any? %>
+    <h4>Attachments</h4>
+    <div class="attachments">
+      <% @ticket.attachments.each do |attachment| %>
+        <p>
+          <%= link_to File.basename(attachment.file.url), attachment.file.url %>
+          (<%= number_to_human_size(attachment.file.size)%>)
+        </p>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+```
+
+
+##### Remove with Migration
+
+```bash
+
+$ rails g migration remove_attachment_from_tickets attachment:string
+
+```
+
+```ruby
+class RemoveAttachmentFromTickets < ActiveRecord::Migration
+  def change
+    remove_column :tickets, :attachment, :string
+  end
+end
+```
+
+Create three times uploads
+
+```ruby
+  def new
+    @ticket = @project.tickets.build
+    authorize @ticket, :create?
+    3.times { @ticket.attachments.build }
+  end
+
+```
+
 ### Links
 
 Developer
