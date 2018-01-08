@@ -502,10 +502,63 @@ end
 
 ```
 
+#### Git
+
+```bash
+  $ git add .gitignore
+  $ git rm -r public/uploads/ticket/attachment
+  $ git commit --amend --reuse-message HEAD
+```
+
+The first command will add the updates you made to you .gitignore file to your repository's staging area.
+The second command will remove any accidentally committed files from your filesystem, and also tell Git to remove them form the respository. The final command will **amend** your latest commit with your newly staged changes, and it will be as if your first commit with this message never existed. The --reuse-message HEAD option uses the commit message of your latest commit.
+
+#### Persisting uploads when redisplaying a form (Carrierwave)
+
+If you submit the new-ticket form but get validation errors, the form should remember
+that you uploaded a file and repopulate it on the form. This is easy to do with Carrier-
+Wave—it requires adding another field to the ticket form, called a **cache field**.
+
+CarrierWave will cache any uploaded file into this seconday field when rerendering the form. When redereing with data on an invalid form.
+
+Added :attachment_cache or method_cache, but you don't need see it rendering; you just want it to work seamlessly in the background. You can turn the attachment_cache field into a hidden field, which will hide it form view.
 
 ```ruby
+<%= simple_form_for([project, ticket]) do |f| %>
+  <%= f.input :name %>
+  <%= f.input :description %>
+  <%= f.input :attachment, as: :file, label: 'File' %>
+  <%= f.input :attachment_cache %>
 
+  <%= f.button :submit, class: 'btn-primary' %>
+<% end %>
 ```
+
+form with hidden field in simple form:
+
+```ruby
+  <%= simple_form_for([project, ticket]) do |f| %>
+  <%= f.input :name %>
+  <%= f.input :description %>
+  <%= f.input :attachment, as: :file, label: 'File' %>
+  <%= f.input :attachment_cache, as: :hidden %>
+
+  <%= f.button :submit, class: 'btn-primary' %>
+<% end %>
+```
+
+Added in Controller in params. For example:
+
+```ruby
+class TicketsController < ApplicationController
+...
+  def ticket_params
+  params.require(:ticket).permit(:name, :description, :attachment,
+    :attachment_cache)
+  end
+end
+```
+
 
 ### Links
 
