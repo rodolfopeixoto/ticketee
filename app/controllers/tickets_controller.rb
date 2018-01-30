@@ -1,12 +1,11 @@
 class TicketsController < ApplicationController
- 
   before_action :set_project
   before_action :set_ticket, only: [:show, :edit, :update, :destroy]
-  
+
   def new
     @ticket = @project.tickets.build
     authorize @ticket, :create?
-    3.times { @ticket.attachments.build }
+    @ticket.attachments.build
   end
 
   def create
@@ -15,11 +14,11 @@ class TicketsController < ApplicationController
     authorize @ticket, :create?
 
     if @ticket.save
-      flash[:notice] = 'Ticket has been created.'
-      redirect_to [@project,@ticket] # [@project,@ticket] = project_tickets_path(@project,@ticket)
+      flash[:notice] = "Ticket has been created."
+      redirect_to [@project, @ticket]
     else
-      flash.now[:alert] = 'Ticket has not been created.'
-      render 'new'
+      flash.now[:alert] = "Ticket has not been created."
+      render "new"
     end
   end
 
@@ -32,24 +31,20 @@ class TicketsController < ApplicationController
   end
 
   def update
-
     authorize @ticket, :update?
-
     if @ticket.update(ticket_params)
-      flash[:notice] = 'Ticket has been updated.'
+      flash[:notice] = "Ticket has been updated."
       redirect_to [@project, @ticket]
     else
-      flash.now[:alert] = 'Ticket has not been update.'
-      render 'edit'
+      flash.now[:alert] = "Ticket has not been updated."
+      render "edit"
     end
   end
 
   def destroy
-
     authorize @ticket, :destroy?
-
     @ticket.destroy
-    flash[:notice] = 'Ticket has been deleted.'
+    flash[:notice] = "Ticket has been deleted."
 
     redirect_to @project
   end
@@ -57,8 +52,8 @@ class TicketsController < ApplicationController
   private
 
   def ticket_params
-    params.require(:ticket).permit(:name, :description, :attachment, 
-     attachments_attributes: [:file, :file_cache])
+    params.require(:ticket).permit(:name, :description,
+      attachments_attributes: [:file, :file_cache])
   end
 
   def set_project

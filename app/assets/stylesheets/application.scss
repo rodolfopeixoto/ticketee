@@ -1,87 +1,72 @@
+@import "bootstrap-sprockets";
 @import "bootstrap";
 @import "font-awesome";
-@import "simple_form";
 @import "projects";
 @import "tickets";
 @import "admin/application";
 @import "admin/users";
 @import "responsive";
 
-.page-header {
-    
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding:20px;
+header {
+  @extend .page-header;
+  position: relative;
+  padding-bottom: 0px;
 
-    &:first-child {
-        margin-top: 20px;
-    }
+  &:first-child {
+    margin-top: 20px;
+  }
 }
 
 ul.actions {
-    @extend .list-unstyled;
-    @extend .list-inline;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
+  @extend .list-unstyled;
+  @extend .list-inline;
 }
 
-.actions li{
-    padding: 5px;
+a.new, a.edit, a.delete {
+  @extend .btn;
+
+  &:before {
+    font-family: "FontAwesome";
+    padding-right: 0.5em;
+  }
 }
 
+a.new {
+  @extend .btn-success;
 
-header {
-    @extend .page-header;
-}
-
-a.new{
-    @extend .btn;
-    @extend .btn-success;
-
-    // Add icon in text and space between text icon and text
-    &:before {
-        font-family: 'FontAwesome';
-        @extend .fa-plus;
-        padding-right: 0.5em;
-    }
-    
+  &:before {
+    @extend .fa-plus;
+  }
 }
 
 a.edit {
-    @extend .btn;
-    @extend .btn-primary;
+  @extend .btn-primary;
 
-    &:before {
-        font-family: 'FontAwesome';
-        @extend .fa-pencil;
-        padding-right: 0.5em;
-    }
+  &:before {
+    @extend .fa-pencil;
+  }
 }
 
 a.delete {
-    @extend .btn;
-    @extend .btn-danger;
+  @extend .btn-danger;
 
-    &:before {
-        font-family: 'FontAwesome';
-        @extend .fa-trash;
-        padding-right: 0.5em;
-    }
+  &:before {
+    @extend .fa-trash;
+  }
 }
 
-
-.alert-notice{
-    @extend .alert-success;
-    margin-top: 6px;
+.alert-notice {
+  @extend .alert-success;
 }
 
-.alert-alert{
-    @extend .alert-danger;
-    margin-top: 6px;
+.alert-alert {
+  @extend .alert-danger;
 }
 
 form {
-    max-width: 500px;
+  max-width: 500px;
+}
+
+body {
+  padding-top: 70px;
 }

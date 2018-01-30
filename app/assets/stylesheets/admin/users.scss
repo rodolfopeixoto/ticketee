@@ -1,15 +1,17 @@
 .roles {
   @extend .table;
-  @extend .form-group;
-  
+  @extend .form-horizontal;
+
   tr:first-child {
     td, th {
       border-top: 0px;
     }
   }
+
   label {
-    @extend .col-form-label;
+    @extend .control-label;
   }
+
   select {
     @extend .form-control;
   }

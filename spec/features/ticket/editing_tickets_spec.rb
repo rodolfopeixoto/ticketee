@@ -27,7 +27,8 @@ RSpec.feature 'Users can edit existing tickets' do
     scenario 'with invalid attributes' do
       fill_in 'Name', with: ''
       click_button 'Update Ticket'
-
-      expect(page).to have_content 'Ticket has not been update.'
+      within(".alert") do
+        expect(page).to have_content "Ticket has not been updated."
+      end
     end
 end
