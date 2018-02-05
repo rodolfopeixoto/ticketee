@@ -6,6 +6,7 @@ require 'rspec/rails'
 require 'faker'
 require 'pry'
 require 'pundit/rspec'
+require 'selenium-webdriver'
 
 # Capybara.javascript_driver = :webkit
 
