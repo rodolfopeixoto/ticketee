@@ -9,22 +9,13 @@ services:
       - '5432'
   web:
     build: . 
-    command: bundle exec rails s -p 3000 -b '0.0.0.0' 
-    volumes:
-      - .:/ticketee 
-    ports:
-      - "3000:3000" 
-    depends_on: 
-      - db
-  test:
-    build: . 
-    command: bundle exec rspec
-    environment:
-      - DISPLAY=unix$DISPLAY
+    command: bundle exec rails s -p 3003 -b '0.0.0.0' 
     volumes:
       - .:/ticketee
-      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      - /tmp/.X11-unix/:/tmp/.X11-unix
     ports:
-      - "3000:3000" 
+      - "3003:3003"
+    environment:
+      - DISPLAY=$DISPLAY
     depends_on: 
       - db

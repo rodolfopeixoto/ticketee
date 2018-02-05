@@ -47,7 +47,7 @@ RSpec.feature "Users can create new tickets" do
     attach_file "File #1", Rails.root.join("spec/fixtures/speed.txt")
 
     click_link "Add another file"
-    binding.pry
+
     attach_file "File #2", Rails.root.join("spec/fixtures/spin.txt")
 
     click_button "Create Ticket"

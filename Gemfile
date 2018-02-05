@@ -74,7 +74,8 @@ group :test do
   # Collection of RSpec/MiniTest matchers and Cucumber steps for testing email in a ruby app using ActionMailer or Pony
   gem 'email_spec'
   gem 'capybara'
-  gem "capybara-webkit"
+  # gem "capybara-webkit"
+  gem "selenium-webdriver", "~> 2.45"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

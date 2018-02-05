@@ -7,7 +7,7 @@ require 'faker'
 require 'pry'
 require 'pundit/rspec'
 
-Capybara.javascript_driver = :webkit
+# Capybara.javascript_driver = :webkit
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |file| require file }
 ActiveRecord::Migration.maintain_test_schema!

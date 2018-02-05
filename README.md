@@ -644,6 +644,14 @@ Create three times uploads
 
 ```
 
+##### Docker with capybara-webkit
+
+Add in terminal:
+
+```
+ xhost +local:docker
+```
+
 ### Links
 
 Developer
